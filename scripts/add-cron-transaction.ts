@@ -1,13 +1,15 @@
 import { getExplorerLink } from "@solana-developers/helpers";
-import { cronJobPda, cronProgram, getMemoTransaction, keypair, taskQueuePda } from "../constants";
+import { cronJobPda, cronProgram, keypair, taskQueuePda } from "../constants";
 import { cronJobTransactionKey } from "@helium/cron-sdk";
+import { getTransaction } from "../transactions";
+import { getCronJobAcc } from "../accounts";
 
 async function main() {
-  const cronJobAcc = await cronProgram.account.cronJobV0.fetch(cronJobPda);
+  const cronJobAcc = await getCronJobAcc();
   const cronJobTransactionId = cronJobAcc.nextTransactionId;
   const [cronJobTransactionPda] = cronJobTransactionKey(cronJobPda, Number(cronJobTransactionId));
 
-  const { transaction, remainingAccounts } = await getMemoTransaction(taskQueuePda);
+  const { transaction, remainingAccounts } = await getTransaction(taskQueuePda);
 
   const sig = await cronProgram.methods
     .addCronTransactionV0({
