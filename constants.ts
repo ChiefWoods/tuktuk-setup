@@ -4,7 +4,6 @@ import type { Tuktuk } from "./types/tuktuk";
 import { init, taskQueueKey, tuktukConfigKey } from "@helium/tuktuk-sdk";
 import { cronJobKey, init as initCron, userCronJobsKey } from "@helium/cron-sdk";
 import type { Cron } from "./types/cron";
-import { getTuktukConfigAcc, getUserCronJobAcc } from "./accounts";
 
 const connection = new Connection(process.env.SOLANA_RPC_URL!, "processed");
 export const keypair = Keypair.fromSecretKey(new Uint8Array(await Bun.file('wallet.json').json()));
@@ -15,10 +14,10 @@ export const cronProgram: Program<Cron> = await initCron(provider);
 
 export const [tuktukConfigPda] = tuktukConfigKey();
 
-const taskQueueId = (await getTuktukConfigAcc()).nextTaskQueueId;
+const taskQueueId = 4; // change this after creating task queue
 export const [taskQueuePda] = taskQueueKey(tuktukConfigPda, Number(taskQueueId));
 
 export const [userCronJobPda] = userCronJobsKey(keypair.publicKey);
 
-const cronJobId = (await getUserCronJobAcc())?.nextCronJobId ?? 0;
+const cronJobId = 0;
 export const [cronJobPda] = cronJobKey(keypair.publicKey, Number(cronJobId));

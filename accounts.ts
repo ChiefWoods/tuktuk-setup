@@ -1,11 +1,7 @@
-import { cronJobPda, cronProgram, tuktukConfigPda, tuktukProgram, userCronJobPda } from "./constants";
+import { cronJobPda, cronProgram, tuktukConfigPda, tuktukProgram } from "./constants";
 
 export async function getTuktukConfigAcc() {
   return await tuktukProgram.account.tuktukConfigV0.fetch(tuktukConfigPda);
-}
-
-export async function getUserCronJobAcc() {
-  return await cronProgram.account.userCronJobsV0.fetchNullable(userCronJobPda);
 }
 
 export async function getCronJobAcc() {

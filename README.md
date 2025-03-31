@@ -37,17 +37,13 @@ solana-keygen new -o wallet.json
 solana airdrop 1 $(solana address -k wallet.json)
 ```
 
-2. Get the next available task queue ID
-
-```bash
-bun run scripts/get-tuktuk-config.ts
-```
-
-3. Set up env values
+2. Set up env values
 
 ```bash
 cp .env.example .env
 ```
+
+3. Set up config in `tuktuk-config.sh`
 
 4. Edit the arguments in `create-task-queue.sh` and create a task queue
 
@@ -55,7 +51,7 @@ cp .env.example .env
 bash scripts/create-task-queue.sh
 ```
 
-5. Edit `TASK_QUEUE_ID` in `tuktuk-config.sh`
+5. Edit `TASK_QUEUE_ID` in `tuktuk-config.sh` and `taskQueueId` in `constants.ts`
 
 6. Edit the arguments in `create-cron.sh` and create a cron job
 
@@ -63,15 +59,13 @@ bash scripts/create-task-queue.sh
 bash scripts/create-cron.sh
 ```
 
-7. Edit `CRON_ID` in `tuktuk-config.sh`
-
-8. Add a cron transaction to your cron
+7. Add a cron transaction to your cron
 
 ```bash
 bun run scripts/add-cron-transaction.ts
 ```
 
-9. Monitor and top-up your task queue and cron job with SOL when required
+8. Monitor and top-up your task queue and cron job with SOL when required
 
 ```bash
 bash scripts/get-task-queue.sh
